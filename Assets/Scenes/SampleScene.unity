@@ -523,6 +523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 472826f9216f48946b9688c33915c232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1280627750}
 --- !u!1 &699360485
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,7 +733,7 @@ GameObject:
   - component: {fileID: 1280627751}
   - component: {fileID: 1280627750}
   m_Layer: 0
-  m_Name: PassWord_obj
+  m_Name: GameSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -752,7 +753,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Systemtext: {fileID: 699360487}
   SystemStr: 
-  SystemNum: 0
+  SystemNum: 
+  CanInput: 0
+  myInputfield: {fileID: 519420033}
+  textKeyWord: 0
 --- !u!4 &1280627751
 Transform:
   m_ObjectHideFlags: 0
