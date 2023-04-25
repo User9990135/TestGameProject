@@ -55,6 +55,13 @@ public enum TextKeyWord
     hello,
     exit
 }
+public enum GameSceneType
+{
+    Story,
+    Battle,
+    Main,
+    Setting
+}
 public class GameManager : MonoBehaviour
 {
     //게임 시스템입니다 게임시스템은 시스템 메시지창에 플레이어의 선택지를 주고 입력한값을 받아 선택을 진행합니다
@@ -185,6 +192,7 @@ public class GameManager : MonoBehaviour
                 break;
             case TextKeyWord.start:
                 Systemtext.text = string.Empty;
+                SystemStr = "\n게임을 시작합니다.";
                 GameSaveCheck();
                 break;
 
