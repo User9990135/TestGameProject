@@ -57,10 +57,12 @@ public enum TextKeyWord
 }
 public enum GameSceneType
 {
+    
     Story,
     Battle,
     Main,
-    Setting
+    Setting,
+    choice  //
 }
 public class GameManager : MonoBehaviour
 {
@@ -73,6 +75,11 @@ public class GameManager : MonoBehaviour
     ////myInputField////
     public myInputField myInputfield;
     ////////////////////
+
+    ////ExcelReader////
+    public ExcelReader excelReader;
+    //////////////////
+
     public TextKeyWord textKeyWord;
     // savedata
     public int die;
@@ -170,39 +177,69 @@ public class GameManager : MonoBehaviour
 
     }
 
+
     public void SystemMessage(TextKeyWord Num)
     {
         switch (Num)
         {
             case TextKeyWord.Mstart:
-                Systemtext.text = string.Empty;
-                SystemStr = "반갑습니다\n저는 당신의 게임 시스템 입니다\n[start] [setting] [exit]";
+                TextIn("[start] [setting] [exit]");
                 break;
             case TextKeyWord.error: // error
-                Systemtext.text = string.Empty;
-                SystemStr = "\n에러가 발생하였습니다 전 선택지로 이동합니다.";
+                TextIn("오류가 발생했습니다");
                 break;
             case TextKeyWord.exit: //game exit
-                Systemtext.text = string.Empty;
-                SystemStr = "\n게임을 종료합니다 수고하셨습니다.";
+                TextIn("게임을 종료합니다.");
+                //게임종료하기 
                 break;
             case TextKeyWord.hello: //game exit
-                Systemtext.text = string.Empty;
-                SystemStr = "\n안녕하세요.";
+                TextIn("안녕하세요?");
                 break;
             case TextKeyWord.start:
-                Systemtext.text = string.Empty;
-                SystemStr = "\n게임을 시작합니다.";
-                GameSaveCheck();
+                TextIn("게임을 시작합니다.");
+                //스테이지 선택 -> 스테이지 시작
+                
+                
                 break;
+            case TextKeyWord.setting:
+                TextIn("시스템 설정으로 이동합니다.");
+              
+                //시스템 설정 보이게하기
+                break;
+                
 
         }
 
     }
-    public void GameSaveCheck()
+    public int GameType = 0;
+    public void StageCheck(string D)
     {
         
+        //챕터 선택 하는 스크립트입니다.
+        TextIn("원하시는 챕터를 선택하세요");
+        GameType = (int)GameSceneType.choice;
+        if(GameType == 4)
+        {
+            TextIn("선택하실수 있는 최대 스테이지는 " +(clearmap +1)+ "입니다");
+            string c = myInputfield.A_input;
+            excelReader.Search(c);
+        }
+        
     }
+    public int c = 0; //텍스트 출력수입니다 많으면 사라집니다.
+    public string TextIn(string A)
+    {
+         c ++;
+        if (c > 1)
+        {
+            Systemtext.text = string.Empty;
+            c = 0;
+        }
+        
+        SystemStr = "\n"+A;
+        return A;
+    } //텍스트를 넣어서 출력합니다
+
     IEnumerator Typing(string text)
     {
         foreach (char letter in text.ToCharArray())
