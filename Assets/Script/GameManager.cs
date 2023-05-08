@@ -16,7 +16,7 @@ public class MyData
     // °ÔÀÓ
     public int Die;
 
-    public string PlayerName;
+
     public int ClearMap;
     //Èû ¹ÎÃ¸ Áö´É
     public int Level;
@@ -32,7 +32,7 @@ public class MyData
         Debug.Log("Die : " + Die);
    //     Debug.Log("W : " + W);
     //    Debug.Log("B : " + B);
-        Debug.Log("PlayerName : " + PlayerName);
+       
         Debug.Log("ClearMap : " + ClearMap);
         //
         Debug.Log("Level : " + Level);
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
    
 
     public int die = 0;
-    public string playername = "¾Æ¹«°³";
+   
     public int clearmap;
     public int level =1;
     public int h =1;
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
     {
         MyData mydata = new MyData();
         mydata.Die = die;
-        mydata.PlayerName = playername.ToString();
+      
         mydata.ClearMap = clearmap;
         mydata.Level = level;
         mydata.H = h;
