@@ -61,3 +61,7 @@ Coin : 영구적인 스텟을 올려주는 스텟업에 사용되는 화폐
 픽셀 캐릭터,맵,아이콘
 https://vurmux.itch.io/urizen-onebit-tilesets
 ////
+
+벤치마킹(배껴온)코드
+https://www.youtube.com/watch?v=N1BKXCxM_hA
+: 적 스포너 + 적 ai

@@ -15,7 +15,7 @@ public class MyData
 
     // 게임
     public int Die;
-
+    
 
     public int ClearMap;
     //힘 민첩 지능
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     //게임 시스템입니다 게임시스템은 시스템 메시지창에 플레이어의 선택지를 주고 입력한값을 받아 선택을 진행합니다
 
 
-   
+    public bool GameStart;
 
     public int die = 0;
    
@@ -116,6 +116,10 @@ public class GameManager : MonoBehaviour
         }
 
     }
- 
 
+    public void Update()
+    {
+        
+    }
+   
 }

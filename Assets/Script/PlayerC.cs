@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class PlayerC : MonoBehaviour
 {
     GameObject GM;
-
+    //EnemySpawn enemyspawn = new EnemySpawn();
+    GameObject ES;
     public int Dex;       // speed = 10+ 0.1*Dex
     public int MaxHp;     // 100+10*H
     public int Hp;
@@ -14,6 +15,7 @@ public class PlayerC : MonoBehaviour
     public string PlayerName;
     public int Mage;  // I 
     public int Mp;
+    public int MaxMp;
 
     //PlayerMove//
     public float Speed;
@@ -23,6 +25,7 @@ public class PlayerC : MonoBehaviour
     void Start()
     {
         GM = GameObject.Find("GameManager");
+        ES = GameObject.Find("EnemySpawner");
         rb = GetComponent<Rigidbody2D>();
         Invoke("StatSet", 0.1f);
     }
@@ -34,6 +37,8 @@ public class PlayerC : MonoBehaviour
         Debug.Log(Dex + "¹ÎÃ¸");
         MaxHp = GM.GetComponent<GameManager>().hp * 10 + 100;
         Debug.Log(MaxHp + "»ý¸í·Â");
+        MaxMp = GM.GetComponent<GameManager>().mana * 1 + 10;
+        Debug.Log(MaxMp + "¸¶³ª");
         Atk = GM.GetComponent<GameManager>().h;
         Debug.Log(Atk + "Èû");
         Mage = GM.GetComponent<GameManager>().i;
@@ -64,15 +69,18 @@ public class PlayerC : MonoBehaviour
         playerDirection = new Vector2(dX, dY).normalized;
     }
 
+    
     public void GameStart_Bt()
     {
+        
         GameStart = true;
+       // ES.GetComponent<EnemysSpawn>().SpawnA();
         StatSet();
     }
     public bool a = false;
     public void UI_StatBt()
     {
-        if(a ==false)
+        if (a != true)
         {
             Stat_ui.gameObject.SetActive(true);
             StatSet();
@@ -81,9 +89,14 @@ public class PlayerC : MonoBehaviour
         }
         else
         {
+
+            Stat_ui.gameObject.SetActive(false);
+            StatSet();
+            UI_Stat();
             a = false;
         }
        
+        
         
     }
     public GameObject Stat_ui;
@@ -91,7 +104,7 @@ public class PlayerC : MonoBehaviour
 
     void UI_Stat()
     {
-        Stat_text.text = "Hp : " + MaxHp + "\nMp : " + Mp + "\nDex : " + (Dex + 1) + "\nInt : " + (Mage + 1) + "\nStr : " + (Atk + 1) + "\nSpeed : " + Speed;
+        Stat_text.text = "Hp : " + MaxHp + "\nMp : " + MaxMp + "\nDex : " + (Dex + 1) + "\nInt : " + (Mage + 1) + "\nStr : " + (Atk + 1) + "\nSpeed : " + Speed;
 
     }
 
