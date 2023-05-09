@@ -86,7 +86,13 @@ public class GameManager : MonoBehaviour
         data2.GetData();
 
     }
-
+    public GameObject Game_1;
+    public GameObject Enemy_Spawn;
+    public void CloseMenu()
+    {
+        Game_1.gameObject.SetActive(false);
+        Enemy_Spawn.GetComponent<EnemySpawn>().SpawnA();
+    }
 
     public void GameLoad(string jsonData)
     {

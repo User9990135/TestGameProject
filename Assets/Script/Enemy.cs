@@ -4,17 +4,33 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    GameManager GM = new GameManager();
+
+    public float Hp;
+    [SerializeField] bool Boss;
     public Transform target;
-    private float speed = 0.2f;
-    public float rotateSpeed = 0.0025f;
+    [SerializeField] private float speed;
+    public float rotateSpeed ;
+    public float Atk;
     private Rigidbody2D rb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        Hp = Hp + 0.2f * GM.clearmap;
+        Atk = Atk + 0.2f * GM.clearmap;
+       
+        rotateSpeed = Random.Range(0.025f, 0.015f);
+        if (Boss == true)
+        {
+            Atk = 5 * 0.2f * GM.clearmap;
+            Hp = 1000 * 0.2f * GM.clearmap;
+        }
+       
+
     }
 
-    
+
     void Update()
     {
         if (!target)
@@ -41,4 +57,33 @@ public class Enemy : MonoBehaviour
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
+
+    public void GetDamaged(int Damage)
+    {
+
+        Hp = Hp - Damage;
+
+        if (Hp < 0)
+        {
+
+            Destroy(gameObject);
+
+        }
+
+    }
+ 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+
+
+            Debug.Log("플레이어에게 데미지를 입힌다!" + Atk);
+            
+            collision.GetComponent<PlayerC>().Damaged((int)Atk);
+
+        }
+    }
+
+   
 }

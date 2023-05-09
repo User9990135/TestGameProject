@@ -3,9 +3,9 @@ using UnityEngine;
 using System;
 using System.Numerics;
 using Random = UnityEngine.Random;
-using Quaternion = UnityEngine.Quaternion;
+//using Quaternion = UnityEngine.Quaternion;
 
-public class EnemysSpawn : MonoBehaviour
+public class EnemySpawn : MonoBehaviour
 {
     PlayerC playerC = new PlayerC();
     [SerializeField] private float spawnRate = 1f;
@@ -13,15 +13,13 @@ public class EnemysSpawn : MonoBehaviour
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private GameObject[] BossPrefabs;
 
+    [SerializeField] private Transform[] SpawnPoint;
     [SerializeField] private bool canSpawn = true;
     
     public void FixedUpdate()
     {
         
-        if (playerC.GameStart == true)
-        {
 
-        }
     }
     // Start is called before the first frame update
     void Start()
@@ -37,7 +35,10 @@ public class EnemysSpawn : MonoBehaviour
             yield return wait;
             int rand = Random.Range(0, enemyPrefabs.Length);
             GameObject enemyToSpawn = enemyPrefabs[rand];
-            Instantiate(enemyToSpawn, transform.position, Quaternion.identity);
+            int randP = Random.Range(0, SpawnPoint.Length);
+
+            int RandSpawnPoint = randP;
+            Instantiate(enemyToSpawn, SpawnPoint[randP].position, transform.rotation);
         }
     }
 
