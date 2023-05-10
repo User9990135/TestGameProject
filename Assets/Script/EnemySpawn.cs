@@ -39,6 +39,7 @@ public class EnemySpawn : MonoBehaviour
 
             int RandSpawnPoint = randP;
             Instantiate(enemyToSpawn, SpawnPoint[randP].position, transform.rotation);
+
         }
     }
 

@@ -49,7 +49,10 @@ public class MyData
 public class GameManager : MonoBehaviour
 {
     //게임 시스템입니다 게임시스템은 시스템 메시지창에 플레이어의 선택지를 주고 입력한값을 받아 선택을 진행합니다
-
+    public GameObject Game_1;
+    public GameObject Enemy_Spawn;
+    PlayerC Player;
+    public GameObject[] img_skill;
 
     public bool GameStart;
 
@@ -86,8 +89,34 @@ public class GameManager : MonoBehaviour
         data2.GetData();
 
     }
-    public GameObject Game_1;
-    public GameObject Enemy_Spawn;
+
+
+    public void Close_skill(int A)
+    {
+        switch (A)
+        {
+            case 0:
+                img_skill[A].SetActive(false);
+                break;
+
+            case 1:
+                img_skill[A].SetActive(false);
+                break;
+        }
+    }
+    public void Open_skill(int A)
+    {
+        switch (A)
+        {
+            case 0:
+                img_skill[A].SetActive(true);
+                break;
+
+            case 1:
+                img_skill[A].SetActive(true);
+                break;
+        }
+    }
     public void CloseMenu()
     {
         Game_1.gameObject.SetActive(false);

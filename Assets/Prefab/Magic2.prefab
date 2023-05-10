@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3635763638940991238}
   - component: {fileID: 1411039675817312039}
   m_Layer: 0
-  m_Name: Magic
+  m_Name: Magic2
   m_TagString: Player_bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -10
-  m_Sprite: {fileID: -1016035063, guid: 9715f003e6e8c7344bfe1b2d0ed09b67, type: 3}
+  m_Sprite: {fileID: 73681749, guid: dfb783eab7dd9a9488d1b505c7015a0c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    public void GetDamaged(int Damage)
+    public void GetDamaged(float Damage)
     {
 
         Hp = Hp - Damage;

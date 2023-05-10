@@ -7,6 +7,7 @@ using System.Linq;
 
 public class PlayerC : MonoBehaviour
 {
+    public ShaderTest shaderTest;
     GameObject GM;
     //EnemySpawn enemyspawn = new EnemySpawn();
     GameObject ES;
@@ -20,6 +21,14 @@ public class PlayerC : MonoBehaviour
     public int MaxMp;
 
     public float Attack_Speed;
+
+    // 적 배열 체크
+
+   // public List<Enemy> positionList;
+    public Transform player;
+    public bool F = false;
+    public GameObject[] enemies;
+
     //PlayerMove//
     public float Speed;
     private Rigidbody2D rb;
@@ -27,6 +36,7 @@ public class PlayerC : MonoBehaviour
     public bool GameStart = false; // 게임 스타트 버튼을 누를시 트루로 바뀌고 시작합니다!
     void Start()
     {
+        shaderTest.UpdateOutline(false);
         GM = GameObject.Find("GameManager");
         ES = GameObject.Find("EnemySpawner");
         rb = GetComponent<Rigidbody2D>();
@@ -58,43 +68,82 @@ public class PlayerC : MonoBehaviour
     {
         if (GameStart == true)
         {
+          
             PlayerMove();
-            EnemyCheck();
+
+            //         enemiesTransform = enemies[0].transform;
 
 
+             if (Input.GetKeyUp(KeyCode.Q))
+             {
+                if(Q_count == false)
+                {
+                    
+                    Invoke("Q_Shot", 1f / Attack_Speed);
+                    
+                }
+                
+                
+             }
         }
     }
+    public bool Q_count = false;
+    public void Q_Shot()
+    {
+        Q_count = true;
+        shaderTest.UpdateOutline(true);
 
-    
+        Invoke("Q_CountDown", 5f / Attack_Speed);
+        EnemyCheck();
+        Invoke("ShaderQ", 0.1f);
+     
+        
+    }
+    public bool W_count = false;
+    public void W_Shot()
+    {
+        W_count = true;
+        shaderTest.UpdateOutline(true);
 
-    public GameObject Magic;
+        Invoke("W_CountDown", 5f / Attack_Speed);
+        EnemyCheck();
+        Invoke("ShaderW", 0.1f);
+
+
+    }
+    public void ShaderQ()
+    {
+        A = 0;
+        GM.GetComponent<GameManager>().Close_skill(A);
+        shaderTest.UpdateOutline(false);
+        Invoke("BulletSpawn", 0.0f); 
+
+    }
+    public void Q_CountDown()
+    {
+        GM.GetComponent<GameManager>().Open_skill(A);
+        Q_count = false;
+       
+    }
+    public GameObject[] Magic;
+    public int A = 0;
     void BulletSpawn()
     {
-
-        Bullet Ammo = Instantiate(Magic).GetComponent<Bullet>();
+        shaderTest.UpdateOutline(false);
+        Bullet Ammo = Instantiate(Magic[A]).GetComponent<Bullet>();
         Ammo.transform.position = new Vector3(transform.position.x, transform.position.y);
 
     }
 
-    IEnumerator Shot()
-    {
-        while (true)
-        {
-
-            //shaderTest.UpdateOutline(true);
-            yield return new WaitForSeconds(1f / Attack_Speed);
-            //shaderTest.UpdateOutline(false);
-            yield return new WaitForSeconds(1f / Attack_Speed);
-            BulletSpawn();
-        }
-
-    }
     private void FixedUpdate()
     {
         
         if (GameStart == true)
         {
+            enemies = GameObject.FindGameObjectsWithTag("Enemy");
             rb.velocity = new Vector2(playerDirection.x * Speed, playerDirection.y * Speed);
+
+
         }
     }
     public void PlayerMove()
@@ -112,7 +161,7 @@ public class PlayerC : MonoBehaviour
         GameStart = true;
        // ES.GetComponent<EnemysSpawn>().SpawnA();
         StatSet();
-        StartCoroutine("Shot");
+       // StartCoroutine("Shot");
         GM.GetComponent<GameManager>().CloseMenu();
         
        
@@ -185,14 +234,13 @@ public class PlayerC : MonoBehaviour
         yield return null;
 
     }
-    public List<Enemy> positionList;
-    public Transform player;
-    public bool F = false;
-    public GameObject[] enemies;
+
+
+
     public void EnemyCheck()
     {
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (F = false)
+        //enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (F == false)
         {
             enemies = enemies.OrderBy(enemy => Vector3.Distance(enemy.transform.position, player.position)).ToArray();
         }
