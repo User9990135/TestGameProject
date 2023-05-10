@@ -17,14 +17,16 @@ public class PlayerC : MonoBehaviour
     public int Atk;    // S
     public string PlayerName;
     public int Mage;  // I 
-    public int Mp;
-    public int MaxMp;
 
     public float Attack_Speed;
+    public bool EnemyLine_a = true;
+
+    public GameObject Stat_ui;
+    public Text Stat_text;
 
     // Àû ¹è¿­ Ã¼Å©
 
-   // public List<Enemy> positionList;
+    // public List<Enemy> positionList;
     public Transform player;
     public bool F = false;
     public GameObject[] enemies;
@@ -44,15 +46,15 @@ public class PlayerC : MonoBehaviour
 
     }
 
-    void StatSet()
+
+    public void StatSet()
     {
         
         Dex = GM.GetComponent<GameManager>().d;
         Debug.Log(Dex + "¹ÎÃ¸");
-        MaxHp = GM.GetComponent<GameManager>().hp * 10 + 100;
+        MaxHp = GM.GetComponent<GameManager>().h * 10 + 100;
         Debug.Log(MaxHp + "»ý¸í·Â");
-        MaxMp = GM.GetComponent<GameManager>().mana * 1 + 10;
-        Debug.Log(MaxMp + "¸¶³ª");
+    
         Atk = GM.GetComponent<GameManager>().h;
         Debug.Log(Atk + "Èû");
         Mage = GM.GetComponent<GameManager>().i;
@@ -62,6 +64,9 @@ public class PlayerC : MonoBehaviour
 
         Hp = MaxHp;
         Attack_Speed = 3 - 0.02f * Mage;
+        HP_text.text = "HP : " + Hp;
+        //GM.GetComponent<GameManager>().SetCoinNeed();
+        //UI_Stat();
     }
     // Update is called once per frame
     void Update()
@@ -87,6 +92,7 @@ public class PlayerC : MonoBehaviour
              }
         }
     }
+    //
     public bool Q_count = false;
     public void Q_Shot()
     {
@@ -125,6 +131,7 @@ public class PlayerC : MonoBehaviour
         Q_count = false;
        
     }
+
     public GameObject[] Magic;
     public int A = 0;
     void BulletSpawn()
@@ -134,7 +141,7 @@ public class PlayerC : MonoBehaviour
         Ammo.transform.position = new Vector3(transform.position.x, transform.position.y);
 
     }
-
+    //
     private void FixedUpdate()
     {
         
@@ -188,16 +195,16 @@ public class PlayerC : MonoBehaviour
         
         
     }
-    public GameObject Stat_ui;
-    public Text Stat_text;
-
-    void UI_Stat()
+    
+ 
+    public void UI_Stat()
     {
-        Stat_text.text = "Hp : " + MaxHp + "\nMp : " + MaxMp + "\nDex : " + (Dex + 1) + "\nInt : " + (Mage + 1) + "\nStr : " + (Atk + 1) + "\nSpeed : " + Speed;
-
+        Stat_text.text = "Hp : " + MaxHp + "\nDex : " + (Dex + 1) + "\nInt : " + (Mage + 1) + "\nStr : " + (Atk + 1) + "\nSpeed : " + Speed;
+        HP_text.text = "HP : " + Hp;
     }
 
     public bool Hurt = false;
+    public Text HP_text;
     public int Damaged(int Enemy_atk)
     {
        
@@ -206,7 +213,7 @@ public class PlayerC : MonoBehaviour
             
             Hp = Hp - Enemy_atk;
             Debug.Log("À¹ ´ÙÃÆ´Ù" + Hp);
-            
+            HP_text.text = "HP : " + Hp;           
             DamagedWait();
 
         }
@@ -214,7 +221,8 @@ public class PlayerC : MonoBehaviour
         if (Hp < 0)
         {
 
-            Destroy(gameObject);
+            Debug.Log("À¹ ¾²·¯Áø´Ù");
+            GM.GetComponent<GameManager>().GameEnd();
 
         }
 
@@ -256,20 +264,20 @@ public class PlayerC : MonoBehaviour
             
         }
     }
-
+   
     public void EnemyLine()
     {
-        bool a = true;
+        
 
-        if (a)
+        if (EnemyLine_a)
         {
             F = false;
-            a = false;
+            EnemyLine_a = false;
         }
         else
         {
             F = true;
-            a = true;
+            EnemyLine_a = true;
         }
 
     }

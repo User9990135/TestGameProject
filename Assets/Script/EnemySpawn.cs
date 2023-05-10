@@ -37,7 +37,7 @@ public class EnemySpawn : MonoBehaviour
             GameObject enemyToSpawn = enemyPrefabs[rand];
             int randP = Random.Range(0, SpawnPoint.Length);
 
-            int RandSpawnPoint = randP;
+           // int RandSpawnPoint = randP;
             Instantiate(enemyToSpawn, SpawnPoint[randP].position, transform.rotation);
 
         }

@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour
 
         if (Hp < 0)
         {
-
+            
             Destroy(gameObject);
 
         }
