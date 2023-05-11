@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     PlayerC Player;
     public GameObject Ingame_UI;
     public GameObject[] img_skill;
-
+  //  public GameObject EnemySpawner;
 
     public int DexStack;
     public int StrStack;
@@ -101,7 +101,11 @@ public class GameManager : MonoBehaviour
         data2.GetData();
 
     }
-
+    public void ExitGame()
+    {
+        SaveData();
+        Application.Quit();
+    }
 
     public void Close_skill(int A)
     {
@@ -135,6 +139,10 @@ public class GameManager : MonoBehaviour
         Enemy_Spawn.GetComponent<EnemySpawn>().SpawnA();
     }
    
+    public void OpenMenu()
+    {
+        Game_1.gameObject.SetActive(true);
+    }
     public void Ingame_bt()
     {
         clearmap = 0;
@@ -162,19 +170,34 @@ public class GameManager : MonoBehaviour
         string jsonData = File.ReadAllText(Application.persistentDataPath + "/PlayerData.json");
         coin += clearmap * 1;
         GameStart = false;
-        clearmap = 0;
+        Ingame_bt();
         SetStage_text();
         SetCoin_text();
         SaveData();
         GameLoad(jsonData);
-        MainReset();
+        OpenMenu();
+        AllMonsterKill();
+        Player.GetComponent<PlayerC>().ReStart();
 
     }
-    public void MainReset()
+   
+    public void AllMonsterKill()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+        
+        DestroyClone("Enemy");
 
+        Enemy_Spawn.GetComponent<EnemySpawn>().Stop();
+        // StopCoroutine("Spawner");
+    }
+    public void DestroyClone(string str)
+    {
+        GameObject[] clone = GameObject.FindGameObjectsWithTag(str);
+
+        for (int i = 0; i < clone.Length; i++)
+        {
+            Destroy(clone[i]);
+        }
+    }
     public void SetCoin_text()
     {
         Coin_text.text=("Coin : " + coin);
@@ -183,6 +206,24 @@ public class GameManager : MonoBehaviour
     public void SetStage_text()
     {
         Stage_text.text = ("Stage : " + clearmap);
+    }
+
+    public int MonsterDie = 0;
+    public void MonsterKill()
+    {
+        MonsterDie += 1;
+        if(MonsterDie >= (int)0.2 * (clearmap+1) * MonsterDie+10)
+        {
+            NextStage();
+            SetCoin_text();
+            SetStage_text();
+            
+        }
+    }
+    public void NextStage()
+    {
+        clearmap += 1;
+        MonsterDie = 0;
     }
 
     public void SetCoinNeed()
@@ -259,6 +300,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerC>();
+       
         try
         {
             string jsonData = File.ReadAllText(Application.persistentDataPath + "/PlayerData.json");

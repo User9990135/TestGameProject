@@ -29,6 +29,7 @@ public class EnemySpawn : MonoBehaviour
 
     private IEnumerator Spawner()
     {
+
         WaitForSeconds wait = new WaitForSeconds(spawnRate);
         while (canSpawn)
         {
@@ -45,7 +46,11 @@ public class EnemySpawn : MonoBehaviour
 
     public void SpawnA()
     {
-        StartCoroutine(Spawner());
+        StartCoroutine("Spawner");
+    }
+    public void Stop()
+    {
+        StopCoroutine("Spawner");
     }
     // Update is called once per frame
     void Update()

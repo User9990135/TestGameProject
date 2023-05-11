@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     GameManager GM = new GameManager();
+    GameObject GMa;
 
     public float Hp;
     [SerializeField] bool Boss;
@@ -16,6 +17,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        GMa = GameObject.Find("GameManager");
         rb = GetComponent<Rigidbody2D>();
         Hp = Hp + 0.2f * GM.clearmap;
         Atk = Atk + 0.2f * GM.clearmap;
@@ -60,12 +62,13 @@ public class Enemy : MonoBehaviour
 
     public void GetDamaged(float Damage)
     {
-
+        
         Hp = Hp - Damage;
 
         if (Hp < 0)
         {
-            
+            GMa.GetComponent<GameManager>().MonsterKill();
+            Debug.Log("적을처치했습니다.");
             Destroy(gameObject);
 
         }

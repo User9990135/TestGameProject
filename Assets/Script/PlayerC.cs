@@ -90,8 +90,17 @@ public class PlayerC : MonoBehaviour
                 
                 
              }
+            if (Input.GetKeyUp(KeyCode.F))
+            {
+                
+                EnemyLine(); 
+
+
+            }
         }
     }
+    
+
     //
     public bool Q_count = false;
     public void Q_Shot()
@@ -105,18 +114,8 @@ public class PlayerC : MonoBehaviour
      
         
     }
-    public bool W_count = false;
-    public void W_Shot()
-    {
-        W_count = true;
-        shaderTest.UpdateOutline(true);
+   // public bool W_count = false;
 
-        Invoke("W_CountDown", 5f / Attack_Speed);
-        EnemyCheck();
-        Invoke("ShaderW", 0.1f);
-
-
-    }
     public void ShaderQ()
     {
         A = 0;
@@ -228,6 +227,13 @@ public class PlayerC : MonoBehaviour
 
         return Hp;
     }
+    public void ReStart()
+    {
+        GameStart = false;
+        StatSet();
+        
+    }
+
     IEnumerator DamagedWait()
     {
         int countTime = 0;
